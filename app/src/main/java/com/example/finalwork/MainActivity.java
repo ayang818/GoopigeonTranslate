@@ -27,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
             switch (item.getItemId()) {
                 case R.id.navigation_home:
                     TranslatePostDTO translatePostDTO = new TranslatePostDTO();
-                    String inputString = new String("你是谁");
+                    String inputString = new String("who are you");
                     translatePostDTO.setQ(inputString);
                     translatePostDTO.setFrom("auto");
                     translatePostDTO.setTo("zh");
@@ -56,10 +56,23 @@ public class MainActivity extends AppCompatActivity {
                     }
                     translatePostDTO.setSign(sign);
                     TranslateProvider translateProvider = new TranslateProvider();
-                    TranslateResultDTO translateResult = translateProvider.getTranslateResuly(translatePostDTO);
-                    System.out.println(translateResult.getDst());
-                    String ans = translateResult.getDst();
-                    mTextMessage.setText(ans);
+                    TranslateResultDTO translateResult = new TranslateResultDTO();
+                    Thread thread = new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            try  {
+                                //Your code goes here
+                                TranslateProvider translateProvider = new TranslateProvider();
+                                TranslateResultDTO translateResult = translateProvider.getTranslateResuly(translatePostDTO);
+                                System.out.println("翻译的结果是"+translateResult.getTrans_result()[0].split(",")[0].split(":")[1]);
+                                String[] ans = translateResult.getTrans_result();
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    });
+                    thread.start();
+
                     return true;
                 case R.id.navigation_dashboard:
                     mTextMessage.setText(R.string.title_dashboard);

@@ -4,7 +4,7 @@ package dto;
 public class TranslateResultDTO {
     String from;
     String to;
-    String dst;
+    String[] trans_result;
 
     public String getFrom() {
         return from;
@@ -22,11 +22,11 @@ public class TranslateResultDTO {
         this.to = to;
     }
 
-    public String getDst() {
-        return dst;
+    public String[] getTrans_result() {
+        return trans_result;
     }
 
-    public void setDst(String dst) {
-        this.dst = dst;
+    public void setTrans_result(String[] trans_result) {
+        this.trans_result = trans_result;
     }
 }
