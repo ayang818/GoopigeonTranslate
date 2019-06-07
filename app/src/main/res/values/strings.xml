@@ -3,4 +3,7 @@
     <string name="title_home">翻译</string>
     <string name="title_dashboard">历史记录</string>
     <string name="title_notifications">简介</string>
+    <string name="introduce">欢迎您使用谷鸽翻译</string>
+    <string name="undershown">输入文字(自动检测)</string>
+    <string name="tipss">目标语言:</string>
 </resources>
