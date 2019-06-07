@@ -1,6 +1,8 @@
 package com.example.finalwork;
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
@@ -27,10 +29,10 @@ public class MainActivity extends AppCompatActivity {
             switch (item.getItemId()) {
                 case R.id.navigation_home:
                     TranslatePostDTO translatePostDTO = new TranslatePostDTO();
-                    String inputString = new String("who are you");
+                    String inputString = new String("你是谁");
                     translatePostDTO.setQ(inputString);
                     translatePostDTO.setFrom("auto");
-                    translatePostDTO.setTo("zh");
+                    translatePostDTO.setTo("en");
                     translatePostDTO.setAppid("20190606000305552");
                     double d = Math.random()*10000;
                     int tempSalt = (int) d;
@@ -54,6 +56,7 @@ public class MainActivity extends AppCompatActivity {
                     for (int i=0; i<s.length;i++){
                         sign+=Integer.toHexString((0x000000ff & s[i]) | 0xffffff00).substring(6);
                     }
+                    Handler mainHandler = new Handler();
                     translatePostDTO.setSign(sign);
                     TranslateProvider translateProvider = new TranslateProvider();
                     TranslateResultDTO translateResult = new TranslateResultDTO();
@@ -61,18 +64,25 @@ public class MainActivity extends AppCompatActivity {
                         @Override
                         public void run() {
                             try  {
-                                //Your code goes here
                                 TranslateProvider translateProvider = new TranslateProvider();
                                 TranslateResultDTO translateResult = translateProvider.getTranslateResuly(translatePostDTO);
-                                System.out.println("翻译的结果是"+translateResult.getTrans_result()[0].split(",")[0].split(":")[1]);
-                                String[] ans = translateResult.getTrans_result();
+                                Handler mainHandler = new Handler(Looper.getMainLooper());
+                                mainHandler.post(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        String[] ans = translateResult.getTrans_result();
+                                        String inputData = translateResult.getTrans_result()[0].split(",")[1].split(":")[1];
+                                        inputData = inputData.substring(0, inputData.length()-2);
+                                        String outputData = translateResult.getTrans_result()[0].split(",")[0].split(":")[1];
+                                        mTextMessage.setText(inputData+"  翻译后是  "+outputData);
+                                    }
+                                });
                             } catch (Exception e) {
                                 e.printStackTrace();
                             }
                         }
                     });
                     thread.start();
-
                     return true;
                 case R.id.navigation_dashboard:
                     mTextMessage.setText(R.string.title_dashboard);

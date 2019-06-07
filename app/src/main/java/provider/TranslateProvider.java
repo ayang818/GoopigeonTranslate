@@ -36,7 +36,6 @@ public class TranslateProvider {
                 .get()
                 .url(getURL)
                 .build();
-        System.out.println("构造request请求成功");
         try (Response response = client.newCall(request).execute()) {
             String translateRES = response.body().string();
             TranslateResultDTO translateResultDTO = JSON.parseObject(translateRES, TranslateResultDTO.class);
