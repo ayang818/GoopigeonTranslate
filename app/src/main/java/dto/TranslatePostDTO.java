@@ -1,5 +1,6 @@
 package dto;
 
+// post需要的参数
 public class TranslatePostDTO {
     String q;
     String from;
