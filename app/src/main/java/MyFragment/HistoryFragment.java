@@ -16,9 +16,12 @@ import org.w3c.dom.Text;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
 
 public class HistoryFragment extends Fragment {
     public TextView textView;
+    protected boolean isCreated = false;
     @Override
     @Nullable
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState){
@@ -26,19 +29,40 @@ public class HistoryFragment extends Fragment {
         textView = (TextView) view.findViewById(R.id.history);
         String historyResult = bufferRead("/data/user/0/com.example.finalwork/files/data.txt");
         textView.setText(historyResult);
+        isCreated = true;
         return view;
+    }
+
+    // 重写方法使数据更新可见，该方法调用早于onCreate()
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+
+        if (!isCreated) {
+            return;
+        }
+        if (isVisibleToUser) {
+            String historyResult = bufferRead("/data/user/0/com.example.finalwork/files/data.txt");
+            textView.setText(historyResult);
+        }
     }
 
     // 获取历史纪录
     public static String bufferRead(String filePath) {
         try {
+            ArrayList<String> stringList = new ArrayList<>();
             BufferedReader bfr = new BufferedReader(new FileReader(filePath));
             String line = bfr.readLine();
             StringBuilder sb = new StringBuilder();
             while (line != null) {
-                sb.append(line);
-                sb.append("\n");
+                stringList.add(line);
                 line = bfr.readLine();
+            }
+            Collections.reverse(stringList);
+
+            for ( int i = 0 ; i < 10 && i < stringList.size(); i++) {
+                sb.append(stringList.get(i));
+                sb.append("\n");
             }
             bfr.close();
             Log.d("buffer", "bufferRead: " + sb.toString());
