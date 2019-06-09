@@ -59,6 +59,7 @@ public class MainActivity extends FragmentActivity {
     private static String[] PERMISSIONS_STORAGE = {
             Manifest.permission.READ_EXTERNAL_STORAGE,
             Manifest.permission.WRITE_EXTERNAL_STORAGE};
+    public String CREATE_PATH;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,6 +67,7 @@ public class MainActivity extends FragmentActivity {
         requestWindowFeature(Window.FEATURE_ACTION_BAR);
         setContentView(R.layout.activity_main);
         ActivityCompat.requestPermissions(this, PERMISSIONS_STORAGE, REQUEST_PERMISSION_CODE);
+        CREATE_PATH = getApplicationContext().getFilesDir().getAbsolutePath() + "/data.txt";
         //初始化控件
         initViews();
         // 初始化导航
@@ -75,6 +77,10 @@ public class MainActivity extends FragmentActivity {
 
     }
 
+    // 在Fragment中调用这个方法
+    public String getPath(){
+        return CREATE_PATH;
+    }
     //初始化控件
     private void initViews() {
         mViewPager = (ViewPager) findViewById(R.id.main_container);
@@ -146,6 +152,7 @@ public class MainActivity extends FragmentActivity {
 
     // 翻译界面点击按钮
     public void onclick(View v) {
+
         mTextMessage = (TextView) findViewById(R.id.message);
         TranslatePostDTO translatePostDTO = new TranslatePostDTO();
         String inputString = "";
@@ -222,10 +229,9 @@ public class MainActivity extends FragmentActivity {
                                 inputData = inputData.substring(0, inputData.length() - 2);
                                 String outputData = translateResult.getTrans_result()[0].split(",")[0].split(":")[1];
                                 String text = inputData + "\"" + "  :  " + outputData;
-                                String path1 = getApplicationContext().getFilesDir().getAbsolutePath() + "/data.txt";
-                                System.out.println(path1);
+                                System.out.println(CREATE_PATH);
                                 mTextMessage.setText(text);
-                                bufferSave(path1, text);
+                                bufferSave(CREATE_PATH, text);
                             } catch (Exception e) {
                                 System.out.println("读文件报错了");
                             }
