@@ -7,6 +7,7 @@ public class TranslateResultDTO {
     String[] trans_result;
     String src;
     String dst;
+
     public String getFrom() {
         return from;
     }

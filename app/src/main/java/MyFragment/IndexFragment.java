@@ -12,9 +12,10 @@ import com.example.finalwork.R;
 
 public class IndexFragment extends Fragment {
     public TextView mTextMessage;
+
     @Override
     @Nullable
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState){
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.view_index, null);
         return view;
     }

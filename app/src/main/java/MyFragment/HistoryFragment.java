@@ -22,9 +22,10 @@ import java.util.Collections;
 public class HistoryFragment extends Fragment {
     public TextView textView;
     protected boolean isCreated = false;
+
     @Override
     @Nullable
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState){
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.view_history, null);
         textView = (TextView) view.findViewById(R.id.history);
         String historyResult = bufferRead("/data/user/0/com.example.finalwork/files/data.txt");
@@ -47,7 +48,7 @@ public class HistoryFragment extends Fragment {
         }
     }
 
-    // 获取历史纪录
+    // 获取最新10条历史纪录
     public static String bufferRead(String filePath) {
         try {
             ArrayList<String> stringList = new ArrayList<>();
@@ -60,7 +61,7 @@ public class HistoryFragment extends Fragment {
             }
             Collections.reverse(stringList);
 
-            for ( int i = 0 ; i < 10 && i < stringList.size(); i++) {
+            for (int i = 0; i < 10 && i < stringList.size(); i++) {
                 sb.append(stringList.get(i));
                 sb.append("\n");
             }

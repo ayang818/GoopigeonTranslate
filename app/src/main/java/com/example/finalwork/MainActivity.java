@@ -59,6 +59,7 @@ public class MainActivity extends FragmentActivity {
     private static String[] PERMISSIONS_STORAGE = {
             Manifest.permission.READ_EXTERNAL_STORAGE,
             Manifest.permission.WRITE_EXTERNAL_STORAGE};
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -75,21 +76,21 @@ public class MainActivity extends FragmentActivity {
     }
 
     //初始化控件
-    private  void initViews(){
+    private void initViews() {
         mViewPager = (ViewPager) findViewById(R.id.main_container);
-        mbuttomNavView =findViewById(R.id.navigation);
+        mbuttomNavView = findViewById(R.id.navigation);
     }
 
     //初始化PageAdapter
-    private  void initAdapter(){
+    private void initAdapter() {
         //将四个Fragment加入集合中
-        mFragments= new ArrayList<>();
+        mFragments = new ArrayList<>();
         mFragments.add(new IndexFragment());
         mFragments.add(new HistoryFragment());
         mFragments.add(new IntroduceFragment());
 
         //初始化适配器
-        mAdapter=new FragmentPagerAdapter(getSupportFragmentManager()) {
+        mAdapter = new FragmentPagerAdapter(getSupportFragmentManager()) {
             @Override
             public Fragment getItem(int i) {
                 return mFragments.get(i);
@@ -122,11 +123,11 @@ public class MainActivity extends FragmentActivity {
     }
 
     //初始化BottomNavigation
-    private void initBottonNavView(){
+    private void initBottonNavView() {
         mbuttomNavView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-                switch (menuItem.getItemId()){
+                switch (menuItem.getItemId()) {
                     case R.id.navigation_home:
                         mViewPager.setCurrentItem(0);
                         return true;
@@ -137,12 +138,13 @@ public class MainActivity extends FragmentActivity {
                         mViewPager.setCurrentItem(2);
                         return true;
                     default:
-                        return  false;
+                        return false;
                 }
             }
         });
     }
 
+    // 翻译界面点击按钮
     public void onclick(View v) {
         mTextMessage = (TextView) findViewById(R.id.message);
         TranslatePostDTO translatePostDTO = new TranslatePostDTO();
@@ -174,10 +176,10 @@ public class MainActivity extends FragmentActivity {
             translatePostDTO.setTo("de");
         }
         translatePostDTO.setAppid("20190606000305552");
-        double d = Math.random()*10000;
+        double d = Math.random() * 10000;
         int tempSalt = (int) d;
         translatePostDTO.setSalt(Integer.toString(tempSalt));
-        String tempSign = new String("20190606000305552"+inputString+Integer.toString(tempSalt)+
+        String tempSign = new String("20190606000305552" + inputString + Integer.toString(tempSalt) +
                 "K2ACZZtjVUHaHIac4oDP");
         // md5加密签名
         MessageDigest message = null;
@@ -187,14 +189,14 @@ public class MainActivity extends FragmentActivity {
             e.printStackTrace();
         }
         try {
-            message.update(tempSign.getBytes("UTF8" ));
+            message.update(tempSign.getBytes("UTF8"));
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
-        byte s[ ]=message.digest( );
+        byte s[] = message.digest();
         String sign = "";
-        for (int i=0; i<s.length;i++){
-            sign+=Integer.toHexString((0x000000ff & s[i]) | 0xffffff00).substring(6);
+        for (int i = 0; i < s.length; i++) {
+            sign += Integer.toHexString((0x000000ff & s[i]) | 0xffffff00).substring(6);
         }
         Handler mainHandler = new Handler();
         translatePostDTO.setSign(sign);
@@ -204,7 +206,7 @@ public class MainActivity extends FragmentActivity {
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
-                try  {
+                try {
                     TranslateProvider translateProvider = new TranslateProvider();
                     // 将url参数传入
                     TranslateResultDTO translateResult = translateProvider.getTranslateResuly(translatePostDTO);
@@ -220,11 +222,11 @@ public class MainActivity extends FragmentActivity {
                                 inputData = inputData.substring(0, inputData.length() - 2);
                                 String outputData = translateResult.getTrans_result()[0].split(",")[0].split(":")[1];
                                 String text = inputData + "\"" + "  :  " + outputData;
-                                String path1 = getApplicationContext().getFilesDir().getAbsolutePath()+"/data.txt";
+                                String path1 = getApplicationContext().getFilesDir().getAbsolutePath() + "/data.txt";
                                 System.out.println(path1);
                                 mTextMessage.setText(text);
                                 bufferSave(path1, text);
-                            } catch (Exception e){
+                            } catch (Exception e) {
                                 System.out.println("读文件报错了");
                             }
                         }
@@ -237,7 +239,7 @@ public class MainActivity extends FragmentActivity {
         thread.start();
     }
 
-    public static void bufferSave(String filename,String msg) {
+    public static void bufferSave(String filename, String msg) {
         try {
             BufferedWriter bfw = new BufferedWriter(new FileWriter(filename, true));
             bfw.write(msg);

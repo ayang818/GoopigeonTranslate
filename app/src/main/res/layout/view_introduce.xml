@@ -16,26 +16,36 @@
             android:id="@+id/tex"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="50dp"
+            android:layout_marginStart="65dp"
             android:textSize="24dp"
             android:text="@string/introduce1" />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
+            android:textSize="18dp"
             android:text="@string/introduce2"
             tools:textColor="@android:color/darker_gray"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
+            android:textSize="18dp"
             android:text="@string/introduce3"
             tools:textColor="@android:color/darker_gray"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
+            android:textSize="18dp"
             android:text="@string/introduce4"
+            tools:textColor="@android:color/darker_gray"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:textSize="18dp"
+            android:text="@string/introduce5"
             tools:textColor="@android:color/darker_gray"/>
         <ImageView
             android:src="@mipmap/gugugu"

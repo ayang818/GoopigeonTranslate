@@ -12,7 +12,7 @@ import com.example.finalwork.R;
 public class IntroduceFragment extends Fragment {
     @Override
     @Nullable
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState){
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.view_introduce, null);
         return view;
     }

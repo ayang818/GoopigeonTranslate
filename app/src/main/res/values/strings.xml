@@ -4,9 +4,25 @@
     <string name="title_dashboard">历史记录</string>
     <string name="title_notifications">简介</string>
     <string name="introduce1">欢迎您使用谷鸽翻译</string>
-    <string name="introduce2">·使用FragmentPagerAdapter和Fragment以及BottomNavigationView实现页面的跳转并保持原有状态</string>
-    <string name="introduce3">·项目分离代码的DTO层，Provider层，代码耦合度低</string>
-    <string name="introduce4">·包含了一系列异常检测机制，项目容错率高</string>
+    <string name="introduce2">
+        功能:
+        1.调用百度翻译API，实现了六种语言(中文，文言文，英语，日语，法语，德语)的翻译功能。
+        2.将最后10个查询过的单词实时显示到了历史记录界面。
+    </string>
+    <string name="introduce3">
+        使用技术:
+        1.使用fastjson和okhttp实现网络请求的收发。
+        2.使用Fragment和FragmentPagerAdpter实现页面保留状态下的轮播以及滑动跳转。
+    </string>
+    <string name="introduce4">
+        优点:
+        1.代码在业务逻辑上分层明显，分离代码的DTO，Provider，view层。代码耦合度低，有利新功能的拓展。
+        2.使用了大量的异常处理机制，代码健壮性良好。
+    </string>
+    <string name="introduce5">
+        缺点:
+        1.UI设计不够美观，缺乏设计感。
+    </string>
     <string name="undershown">输入文字(自动检测)</string>
     <string name="tipss">目标语言:</string>
     <string name="history">历史记录</string>
