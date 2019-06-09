@@ -14,33 +14,32 @@
 
         <TextView
             android:id="@+id/tex"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="50dp"
+            android:textSize="24dp"
+            android:text="@string/introduce1" />
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            android:text="@string/introduce"
-            android:textAppearance="@style/TextAppearance.AppCompat.Display2"/>
-        <!--<TextView-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_margin="10dp"-->
-            <!--android:text="@string/\"-->
-            <!--android:textAppearance="@style/Base.TextAppearance.AppCompat.Headline"-->
-
-            <!--tools:textColor="@android:color/darker_gray"/>-->
-
-        <!--<TextView-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_margin="10dp"-->
-            <!--android:text="@string/"-->
-            <!--android:textAppearance="@style/TextAppearance.AppCompat.Display2" />-->
-        <!--<TextView-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_margin="10dp"-->
-            <!--android:text="@string/"-->
-            <!--android:textAppearance="@style/Base.TextAppearance.AppCompat.Headline"-->
-            <!--android:lineSpacingExtra="10dp"-->
-            <!--tools:textColor="@android:color/darker_gray"/>-->
+            android:text="@string/introduce2"
+            tools:textColor="@android:color/darker_gray"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:text="@string/introduce3"
+            tools:textColor="@android:color/darker_gray"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:text="@string/introduce4"
+            tools:textColor="@android:color/darker_gray"/>
+        <ImageView
+            android:src="@mipmap/gugugu"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
     </LinearLayout>
 </ScrollView>

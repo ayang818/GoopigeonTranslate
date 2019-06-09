@@ -16,7 +16,6 @@ public class IndexFragment extends Fragment {
     @Nullable
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState){
         View view = inflater.inflate(R.layout.view_index, null);
-
         return view;
     }
 }

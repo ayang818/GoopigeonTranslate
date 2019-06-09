@@ -1,24 +1,40 @@
 package com.example.finalwork;
 
+import android.Manifest;
+import android.content.Context;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.Looper;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.w3c.dom.Text;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.RandomAccessFile;
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -39,12 +55,16 @@ public class MainActivity extends FragmentActivity {
     private FragmentPagerAdapter mAdapter;
     private List<Fragment> mFragments;
     private BottomNavigationView mbuttomNavView;
-
+    private static int REQUEST_PERMISSION_CODE = 1;
+    private static String[] PERMISSIONS_STORAGE = {
+            Manifest.permission.READ_EXTERNAL_STORAGE,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE};
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_ACTION_BAR);
         setContentView(R.layout.activity_main);
+        ActivityCompat.requestPermissions(this, PERMISSIONS_STORAGE, REQUEST_PERMISSION_CODE);
         //初始化控件
         initViews();
         // 初始化导航
@@ -122,6 +142,7 @@ public class MainActivity extends FragmentActivity {
             }
         });
     }
+
     public void onclick(View v) {
         mTextMessage = (TextView) findViewById(R.id.message);
         TranslatePostDTO translatePostDTO = new TranslatePostDTO();
@@ -192,12 +213,20 @@ public class MainActivity extends FragmentActivity {
                     mainHandler.post(new Runnable() {
                         @Override
                         public void run() {
-                            String[] ans = translateResult.getTrans_result();
-                            System.out.println(translateResult.getTrans_result());
-                            String inputData = translateResult.getTrans_result()[0].split(",")[1].split(":")[1];
-                            inputData = inputData.substring(0, inputData.length()-2);
-                            String outputData = translateResult.getTrans_result()[0].split(",")[0].split(":")[1];
-                            mTextMessage.setText(inputData+"\""+"  翻译后是  "+outputData);
+                            try {
+                                String[] ans = translateResult.getTrans_result();
+                                System.out.println(translateResult.getTrans_result());
+                                String inputData = translateResult.getTrans_result()[0].split(",")[1].split(":")[1];
+                                inputData = inputData.substring(0, inputData.length() - 2);
+                                String outputData = translateResult.getTrans_result()[0].split(",")[0].split(":")[1];
+                                String text = inputData + "\"" + "  :  " + outputData;
+                                String path1 = getApplicationContext().getFilesDir().getAbsolutePath()+"/data.txt";
+                                System.out.println(path1);
+                                mTextMessage.setText(text);
+                                bufferSave(path1, text);
+                            } catch (Exception e){
+                                System.out.println("读文件报错了");
+                            }
                         }
                     });
                 } catch (Exception e) {
@@ -206,5 +235,29 @@ public class MainActivity extends FragmentActivity {
             }
         });
         thread.start();
+    }
+
+    public static void bufferSave(String filename,String msg) {
+        try {
+            BufferedWriter bfw = new BufferedWriter(new FileWriter(filename, true));
+            bfw.write(msg);
+            bfw.newLine();
+            bfw.flush();
+            bfw.close();
+            System.out.println("写入成功");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    // 申请文件读取权限
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == REQUEST_PERMISSION_CODE) {
+            for (int i = 0; i < permissions.length; i++) {
+                Log.i("MainActivity", "申请的权限为：" + permissions[i] + ",申请结果：" + grantResults[i]);
+            }
+        }
     }
 }
