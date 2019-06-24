@@ -20,3 +20,6 @@
 ![](ScreemImage/翻译界面.jpg)
 ![](ScreemImage/历史记录界面.jpg)
 ![](ScreemImage/简介界面.jpg)
+
+## LICENSE
+MIT License
